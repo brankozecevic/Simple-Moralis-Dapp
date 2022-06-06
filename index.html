@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <!-- Moralis SDK code -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+    <link rel="shortcut icon" href="#">
+  </head>
+  <body>
+    <h1>Simple Moralis Dapp</h1>
+      <button id="btn-login">Login</button>
+      <button id="btn-logout">Logout</button>
+      <button id="btn-get-stats">Transactions Stats</button>
+      <p id="msg"></p>
+      <div id="get-stats"></div>
+      <script src="main.js"></script>
+      <script>
+        document.getElementById("btn-logout").hidden = true;
+        document.getElementById("btn-get-stats").hidden = true;
+        let User1 = new UserSome();
+        document.getElementById("btn-login").onclick = User1.login;
+        document.getElementById("btn-logout").onclick = User1.logOut;
+        document.getElementById("btn-get-stats").onclick = User1.getStats;
+      </script>    
+  </body>
+</html>
