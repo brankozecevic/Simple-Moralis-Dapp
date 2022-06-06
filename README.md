@@ -1,4 +1,4 @@
-// SIMPLE MORALIS DAPP //
+# Simple-Moralis-Dapp
 
 This multi chain dapp has 3 functionality:
 login, logout and get transactions data for connected 
