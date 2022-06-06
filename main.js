@@ -5,11 +5,11 @@ class UserSome{
     appId = ""; 
     //Supported chains
     static chains = {
-        Eth: {id:'0x1', link:'https://etherscan.io/tx/'},
-        Bsc: {id:'0x38', link:'https://bscscan.com/tx/'},
-        Avax: {id:'0xa86a', link:'https://snowtrace.io/tx/'},
-        Fantom: {id:'0xfa', link:'https://ftmscan.com/tx/'},
-        Polygon: {id:'0x89', link:'https://polygonscan.com/tx/'}
+        eth: {id:'0x1', link:'https://etherscan.io/tx/'},
+        bsc: {id:'0x38', link:'https://bscscan.com/tx/'},
+        avalanche: {id:'0xa86a', link:'https://snowtrace.io/tx/'},
+        fantom: {id:'0xfa', link:'https://ftmscan.com/tx/'},
+        polygon: {id:'0x89', link:'https://polygonscan.com/tx/'}
     }
     //Initialize your server using Moralis.start()
     constructor(){
@@ -25,6 +25,7 @@ class UserSome{
             document.getElementById("btn-login").hidden = true;
             document.getElementById("btn-logout").hidden = false;
             document.getElementById("btn-get-stats").hidden = false;
+            res = UserSome.capitalizeFirstLetter(res);
             document.getElementById("msg").textContent = `You're on ${res} network.`;
         }
     }     
@@ -44,23 +45,29 @@ class UserSome{
             //Checking if chain is supported
             if(res){
                 document.getElementById("msg").textContent = "";
-                const query = new Moralis.Query(res+"Transactions");
-                query.equalTo("from_address", user.get("ethAddress"));
-                const results = await query.find();
-                let container = document.getElementById('get-stats'); 
+                const container = document.getElementById('get-stats'); 
                 container.innerHTML = "";
                 const messageChain = document. createElement('p');
+                container.appendChild(messageChain);
+                let allTransactions;
+                if(res == "eth"){
+                    allTransactions = await Moralis.Web3API.account.getTransactions();
+                }else{
+                    const options = {
+                        chain: `${res}`
+                    };
+                    allTransactions = await Moralis.Web3API.account.getTransactions(options);
+                }
                 messageChain.textContent = `Your transactions on ${res} chain are:`;
-                container.appendChild(messageChain);        
-                results.forEach(element => {              
+                allTransactions.result.forEach(element => {
                     const transaction_hash = document. createElement('a');
                     const break_line = document. createElement('p');
-                    const etherscan_link = UserSome.chains[`${res}`]['link']+element.attributes.hash;
+                    const etherscan_link = UserSome.chains[`${res}`]['link']+element.hash;
                     transaction_hash.setAttribute('href', etherscan_link);
                     transaction_hash.setAttribute('target','_blank');
-                    transaction_hash.textContent = element.attributes.hash;
+                    transaction_hash.textContent = element.hash;
                     container.appendChild(transaction_hash);
-                    container.appendChild(break_line);    
+                    container.appendChild(break_line); 
                 });
             }else alert('This chain is not supported!');         
         }else Moralis.User.authenticate({signingMessage:"Please sign up to Simple Moralis Dapp"});
@@ -72,5 +79,8 @@ class UserSome{
             if(UserSome.chains[key]['id'] == userChain)
             return key;           
         }
+    }
+    static capitalizeFirstLetter(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 }
