@@ -1,25 +1,44 @@
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple Moralis Dapp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <!-- Moralis SDK code -->
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
     <link rel="shortcut icon" href="#">
   </head>
   <body>
-    <h1>Simple Moralis Dapp</h1>
-      <button id="btn-login">Login</button>
-      <button id="btn-logout">Logout</button>
-      <button id="btn-get-stats">Transactions Stats</button>
-      <p id="msg"></p>
-      <div id="get-stats"></div>
+    <div class="container">
+      <nav class="navbar bg-light">
+        <form class="container-fluid justify-content-start">
+          <a class="navbar-brand" href="#">Simple Moralis Dapp</a>
+          <button id="btn-login" class="btn btn-outline-success me-2" type="button">Login</button>
+          <button id="btn-get-stats" class="btn btn-outline-info me-2" type="button">All Transactions</button>
+          <button id="btn-get-tokens" class="btn btn-outline-info me-2" type="button">All ERC-20 Tokens</button>
+          <button id="btn-get-nft-tokens" class="btn btn-outline-info me-2" type="button">All NFTs</button>
+          <button id="btn-logout" class="btn btn-outline-danger me-2" type="button">Logout</button>
+        </form>
+      </nav>
+    </div>
+    <div id="get-stats" class="container">
+    </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>   
       <script src="main.js"></script>
       <script>
         document.getElementById("btn-logout").hidden = true;
         document.getElementById("btn-get-stats").hidden = true;
+        document.getElementById("btn-get-tokens").hidden = true;
+        document.getElementById("btn-get-nft-tokens").hidden = true;
         let User1 = new UserSome();
         document.getElementById("btn-login").onclick = User1.login;
         document.getElementById("btn-logout").onclick = User1.logOut;
         document.getElementById("btn-get-stats").onclick = User1.getStats;
+        document.getElementById("btn-get-tokens").onclick = User1.getTokenBalance;
+        document.getElementById("btn-get-nft-tokens").onclick = User1.getNftBalance;
       </script>    
   </body>
 </html>
